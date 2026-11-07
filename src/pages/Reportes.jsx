@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { CalendarDays, ChevronRight, ClipboardList, MapPin, Plus } from 'lucide-react'
+import { CalendarDays, ChevronRight, ClipboardList, MapPin, Plus, Siren } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
+import { useEmergencia } from '../context/EmergenciaContext.jsx'
 import { escucharReportes } from '../services/reportes'
 import { ESTADOS_ACTIVOS, getEspecialidad, getServicio } from '../data/servicios'
 import { formatFecha } from '../utils/fechas'
@@ -23,6 +24,7 @@ function pasaFiltro(r, filtro) {
 
 export default function Reportes() {
   const { user, perfil } = useApp()
+  const { abrir: abrirEmergencia } = useEmergencia()
   const navigate = useNavigate()
   const [reportes, setReportes] = useState(null) // null = cargando
   const [error, setError] = useState(null)
@@ -54,9 +56,14 @@ export default function Reportes() {
           <p className="eyebrow">{perfil.residencia}</p>
           <h1>Hola, {perfil.nombre}</h1>
         </div>
-        <Link to="/nuevo" className="btn btn-primary desktop-solo">
-          <Plus size={18} /> Nuevo reporte
-        </Link>
+        <div className="cab-acciones">
+          <button type="button" className="btn btn-emergencia" onClick={abrirEmergencia}>
+            <Siren size={18} /> Emergencia
+          </button>
+          <Link to="/nuevo" className="btn btn-primary">
+            <Plus size={18} /> Nuevo reporte
+          </Link>
+        </div>
       </header>
 
       {error && <div className="alerta alerta-error">{error}</div>}
@@ -122,7 +129,11 @@ export default function Reportes() {
           const esp = getEspecialidad(r.tipo, r.especialidad)
           const Icono = tipo?.icono || ClipboardList
           return (
-            <Link key={r.id} to={`/reportes/${r.id}`} className="reporte">
+            <Link
+              key={r.id}
+              to={`/reportes/${r.id}`}
+              className={`reporte ${r.prioridad === 'urgente' ? 'urgente' : ''}`}
+            >
               <span className={`reporte-icono tipo-${r.tipo}`}>
                 <Icono size={22} />
               </span>

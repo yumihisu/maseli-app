@@ -6,6 +6,7 @@ import SetupNotice from '../components/SetupNotice.jsx'
 import { useApp } from '../context/AppContext.jsx'
 import { useToast } from '../components/Toast.jsx'
 import { firebaseConfigurado } from '../firebase'
+import { EDIFICIOS } from '../data/servicios'
 
 export default function Ingreso() {
   const { perfil, cargando, error, guardarPerfil } = useApp()
@@ -22,7 +23,7 @@ export default function Ingreso() {
   async function enviar(e) {
     e.preventDefault()
     const nuevos = {}
-    if (residencia.trim().length < 2) nuevos.residencia = 'Ingresá el nombre de tu residencia o edificio.'
+    if (!residencia) nuevos.residencia = 'Elegí tu edificio.'
     if (nombre.trim().length < 2) nuevos.nombre = 'Ingresá tu nombre.'
     setErrores(nuevos)
     if (Object.keys(nuevos).length) return
@@ -80,14 +81,14 @@ export default function Ingreso() {
 
           <label className="campo">
             <span>Residencia / Edificio</span>
-            <input
-              type="text"
-              placeholder="Ej: Edificio Libertador, Torre 2"
-              value={residencia}
-              onChange={(e) => setResidencia(e.target.value)}
-              maxLength={80}
-              autoComplete="off"
-            />
+            <select value={residencia} onChange={(e) => setResidencia(e.target.value)}>
+              <option value="">Elegí tu edificio</option>
+              {EDIFICIOS.map((edificio) => (
+                <option key={edificio} value={edificio}>
+                  {edificio}
+                </option>
+              ))}
+            </select>
             {errores.residencia && <em className="error-texto">{errores.residencia}</em>}
           </label>
 

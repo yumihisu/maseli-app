@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Check, Loader2, Send } from 'lucide-react'
 import { useApp } from '../context/AppContext.jsx'
 import { useToast } from '../components/Toast.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
+import PickerInput from '../components/PickerInput.jsx'
 import { crearReporte } from '../services/reportes'
 import { SERVICIOS, getEspecialidad, getServicio } from '../data/servicios'
 import { formatFecha, hoyISO } from '../utils/fechas'
@@ -69,14 +70,24 @@ export default function NuevoReporte() {
     setPaso(n)
   }
 
-  function siguiente() {
-    const e = validarPaso(paso, form)
+  function siguiente(f = form) {
+    const e = validarPaso(paso, f)
     setErrores(e)
     if (Object.keys(e).length) return
     const n = paso + 1
     setMaxPaso((m) => Math.max(m, n))
     setPaso(n)
     window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  // Doble clic (o doble toque): elige la opción y avanza sin usar "Siguiente"
+  function elegirYAvanzar(campo, valor) {
+    const f =
+      campo === 'tipo'
+        ? { ...form, tipo: valor, especialidad: form.tipo === valor ? form.especialidad : '' }
+        : { ...form, [campo]: valor }
+    setForm(f)
+    siguiente(f)
   }
 
   async function enviar() {
@@ -140,6 +151,7 @@ export default function NuevoReporte() {
                     type="button"
                     className={`opcion ${form.tipo === s.id ? 'sel' : ''}`}
                     onClick={() => elegirTipo(s.id)}
+                    onDoubleClick={() => elegirYAvanzar('tipo', s.id)}
                     aria-pressed={form.tipo === s.id}
                   >
                     <span className={`opcion-icono tipo-${s.id}`}>
@@ -155,6 +167,7 @@ export default function NuevoReporte() {
               })}
             </div>
             {errores.tipo && <em className="error-texto">{errores.tipo}</em>}
+            <p className="pista">Tip: con doble clic (o doble toque) avanzás sin usar “Siguiente”.</p>
           </>
         )}
 
@@ -173,6 +186,7 @@ export default function NuevoReporte() {
                     type="button"
                     className={`opcion ${form.especialidad === s.id ? 'sel' : ''}`}
                     onClick={() => set('especialidad', s.id)}
+                    onDoubleClick={() => elegirYAvanzar('especialidad', s.id)}
                     aria-pressed={form.especialidad === s.id}
                   >
                     <span className={`opcion-icono tipo-${servicio.id}`}>
@@ -187,6 +201,7 @@ export default function NuevoReporte() {
               })}
             </div>
             {errores.especialidad && <em className="error-texto">{errores.especialidad}</em>}
+            <p className="pista">Tip: con doble clic (o doble toque) avanzás sin usar “Siguiente”.</p>
           </>
         )}
 
@@ -231,26 +246,6 @@ export default function NuevoReporte() {
               <small className="contador">{form.descripcion.length}/600</small>
               {errores.descripcion && <em className="error-texto">{errores.descripcion}</em>}
             </label>
-
-            <fieldset className="campo">
-              <legend>Prioridad</legend>
-              <div className="segmentado">
-                {[
-                  ['normal', 'Normal'],
-                  ['urgente', 'Urgente'],
-                ].map(([id, label]) => (
-                  <button
-                    key={id}
-                    type="button"
-                    className={`seg ${form.prioridad === id ? 'sel' : ''} ${id === 'urgente' ? 'urg' : ''}`}
-                    onClick={() => set('prioridad', id)}
-                    aria-pressed={form.prioridad === id}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            </fieldset>
           </>
         )}
 
@@ -261,7 +256,7 @@ export default function NuevoReporte() {
             <div className="grilla-2">
               <label className="campo">
                 <span>Fecha</span>
-                <input
+                <PickerInput
                   type="date"
                   min={hoyISO()}
                   value={form.fecha}
@@ -271,7 +266,7 @@ export default function NuevoReporte() {
               </label>
               <label className="campo">
                 <span>Hora</span>
-                <input type="time" value={form.hora} onChange={(e) => set('hora', e.target.value)} />
+                <PickerInput type="time" value={form.hora} onChange={(e) => set('hora', e.target.value)} />
                 {errores.hora && <em className="error-texto">{errores.hora}</em>}
               </label>
             </div>
@@ -294,10 +289,6 @@ export default function NuevoReporte() {
                 <div>
                   <dt>Descripción</dt>
                   <dd>{form.descripcion}</dd>
-                </div>
-                <div>
-                  <dt>Prioridad</dt>
-                  <dd>{form.prioridad === 'urgente' ? 'Urgente' : 'Normal'}</dd>
                 </div>
                 {form.fecha && (
                   <div>
@@ -325,7 +316,7 @@ export default function NuevoReporte() {
         )}
 
         {paso < 3 ? (
-          <button type="button" className="btn btn-primary" onClick={siguiente}>
+          <button type="button" className="btn btn-primary" onClick={() => siguiente()}>
             Siguiente <ArrowRight size={18} />
           </button>
         ) : (

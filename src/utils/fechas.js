@@ -6,6 +6,12 @@ export function hoyISO() {
   return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
 }
 
+// Hora actual en formato HH:MM (hora local)
+export function horaActual() {
+  const d = new Date()
+  return `${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
 // "2026-10-25" -> "dom, 25 oct"
 export function formatFecha(iso) {
   if (!iso) return ''

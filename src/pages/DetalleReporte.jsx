@@ -14,6 +14,7 @@ import {
 import { useToast } from '../components/Toast.jsx'
 import Breadcrumbs from '../components/Breadcrumbs.jsx'
 import Modal from '../components/Modal.jsx'
+import PickerInput from '../components/PickerInput.jsx'
 import StatusBadge from '../components/StatusBadge.jsx'
 import {
   actualizarReporte,
@@ -236,12 +237,12 @@ export default function DetalleReporte() {
               <div className="grilla-2">
                 <label className="campo">
                   <span>Fecha</span>
-                  <input type="date" value={form.fecha} onChange={(e) => setForm({ ...form, fecha: e.target.value })} />
+                  <PickerInput type="date" value={form.fecha} onChange={(e) => setForm({ ...form, fecha: e.target.value })} />
                   {errores.fecha && <em className="error-texto">{errores.fecha}</em>}
                 </label>
                 <label className="campo">
                   <span>Hora</span>
-                  <input type="time" value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} />
+                  <PickerInput type="time" value={form.hora} onChange={(e) => setForm({ ...form, hora: e.target.value })} />
                   {errores.hora && <em className="error-texto">{errores.hora}</em>}
                 </label>
               </div>
@@ -260,7 +261,7 @@ export default function DetalleReporte() {
 
         <section className="card">
           <h2>Estado del reporte</h2>
-          <ol className="timeline">
+          <ol className={`timeline ${reporte.estado === 'completado' ? 'completado' : ''}`}>
             {FLUJO.map((e) => {
               const ms = momentoDe(e)
               const actual = reporte.estado === e

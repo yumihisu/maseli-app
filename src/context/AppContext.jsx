@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { onAuthStateChanged, signInAnonymously } from 'firebase/auth'
 import { doc, onSnapshot, serverTimestamp, setDoc } from 'firebase/firestore'
 import { auth, db, firebaseConfigurado } from '../firebase'
+import { escribir } from '../utils/red'
 
 const AppContext = createContext(null)
 
@@ -35,11 +36,14 @@ export function AppProvider({ children }) {
     return cancelar
   }, [user])
 
-  const guardarPerfil = (nombre, residencia) =>
-    setDoc(
-      doc(db, 'residentes', user.uid),
-      { uid: user.uid, nombre, residencia, actualizadoEn: serverTimestamp() },
-      { merge: true },
+  // `extras`: datos opcionales del perfil (por ejemplo piso y depto para las emergencias)
+  const guardarPerfil = (nombre, residencia, extras = {}) =>
+    escribir(() =>
+      setDoc(
+        doc(db, 'residentes', user.uid),
+        { uid: user.uid, nombre, residencia, ...extras, actualizadoEn: serverTimestamp() },
+        { merge: true },
+      ),
     )
 
   const cargando = firebaseConfigurado && !error && (!user || perfil === undefined)

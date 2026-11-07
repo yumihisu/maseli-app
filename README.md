@@ -18,9 +18,29 @@ tiempo real.
 | `/reportes/:id` | Detalle: ver estado (línea de tiempo), modificar, cancelar, eliminar |
 | `/residencia` | Mi residencia (editar perfil) |
 
+## Novedades de la versión 2
+
+- **Botón de emergencia (rojo):** junto a "Nuevo reporte" en el dashboard, en el menú lateral y en la barra
+  superior del celular. En dos clics (botón + tipo de emergencia) se envía un reporte urgente con la ubicación
+  guardada del residente. Recuerda llamar al 911 si hay peligro inmediato.
+- **Ingreso con menú desplegable** de edificios (Edificio 1, 2 y 3).
+- **Doble clic (o doble toque)** en Tipo de servicio y Especialidad para avanzar sin usar "Siguiente".
+- **Fecha y hora:** todo el recuadro abre el calendario o el reloj.
+- **Línea de estado en verde** cuando el reporte está completado.
+- **Control de plagas** como nueva especialidad de Limpieza.
+- **Se quitó la prioridad** del formulario (la urgencia se resuelve con el botón de emergencia).
+- **Menú lateral plegable:** solo íconos; el clic en el logo lo despliega o lo pliega y recuerda la elección.
+- **El perfil del menú** abre "Mi residencia", donde se edita el nombre y la unidad (piso y depto).
+- **Error visible sin conexión:** cartel rojo "Sin conexión", aviso inmediato al guardar y tiempo máximo de
+  espera, para que la app nunca simule que algo se guardó cuando no fue así.
+- **Logo real** (isotipo) en el menú, el ingreso y la pestaña del navegador.
+
+> Importante: la versión 2 cambia `firestore.rules` (permite el tipo `emergencia` y los campos `piso` y
+> `depto` en el perfil). Hay que volver a pegar el archivo en Firebase → Firestore → Reglas y **Publicar**.
+
 ## Datos que se guardan en Firestore
 
-- `residentes/{uid}`: nombre y residencia del usuario.
+- `residentes/{uid}`: nombre, residencia y, de forma opcional, piso y depto del usuario.
 - `reportes/{id}`: uid, nombre, residencia, tipo, especialidad, piso, depto, descripcion, prioridad,
   fecha, hora, estado, historial de estados, creadoEn, actualizadoEn.
 
@@ -54,7 +74,8 @@ Si cambiás `.env`, reiniciá `npm run dev`.
 4. **Authentication → Método de acceso → Anónimo → Habilitar.**
 5. **Firestore Database → Crear base de datos** (edición Standard, id `(default)`, región
    `southamerica-east1`, **modo producción**).
-6. En la pestaña **Reglas**, pegá el contenido de `firestore.rules` y **Publicar**.
+6. En la pestaña **Reglas**, pegá el contenido de `firestore.rules` y **Publicar** (también cada vez que
+   cambie ese archivo, por ejemplo en la versión 2).
    (Las reglas no se despliegan con Vercel: se publican en Firebase.)
 
 ## Publicar en Vercel

@@ -3,6 +3,7 @@
 //   AGREGAR    -> crearReporte
 //   MODIFICAR  -> actualizarReporte / cambiarEstado
 //   ELIMINAR   -> eliminarReporte
+// Las escrituras pasan por `escribir`, que falla de forma visible si no hay internet.
 import {
   addDoc,
   collection,
@@ -15,6 +16,7 @@ import {
   where,
 } from 'firebase/firestore'
 import { db } from '../firebase'
+import { escribir } from '../utils/red'
 
 const COLECCION = 'reportes'
 
@@ -45,34 +47,40 @@ export function escucharReporte(id, onData, onError) {
 
 // AGREGAR
 export async function crearReporte(datos) {
-  const ref = await addDoc(collection(db, COLECCION), {
-    ...datos,
-    estado: 'pendiente',
-    historial: [{ estado: 'pendiente', en: Date.now() }],
-    creadoEn: serverTimestamp(),
-    actualizadoEn: serverTimestamp(),
-  })
+  const ref = await escribir(() =>
+    addDoc(collection(db, COLECCION), {
+      ...datos,
+      estado: 'pendiente',
+      historial: [{ estado: 'pendiente', en: Date.now() }],
+      creadoEn: serverTimestamp(),
+      actualizadoEn: serverTimestamp(),
+    }),
+  )
   return ref.id
 }
 
 // MODIFICAR: campos editables (ubicación, descripción, fecha, hora)
 export function actualizarReporte(id, cambios) {
-  return updateDoc(doc(db, COLECCION, id), {
-    ...cambios,
-    actualizadoEn: serverTimestamp(),
-  })
+  return escribir(() =>
+    updateDoc(doc(db, COLECCION, id), {
+      ...cambios,
+      actualizadoEn: serverTimestamp(),
+    }),
+  )
 }
 
 // MODIFICAR: cambio de estado, guardando el historial para la línea de tiempo
 export function cambiarEstado(reporte, nuevoEstado) {
-  return updateDoc(doc(db, COLECCION, reporte.id), {
-    estado: nuevoEstado,
-    historial: [...(reporte.historial || []), { estado: nuevoEstado, en: Date.now() }],
-    actualizadoEn: serverTimestamp(),
-  })
+  return escribir(() =>
+    updateDoc(doc(db, COLECCION, reporte.id), {
+      estado: nuevoEstado,
+      historial: [...(reporte.historial || []), { estado: nuevoEstado, en: Date.now() }],
+      actualizadoEn: serverTimestamp(),
+    }),
+  )
 }
 
 // ELIMINAR
 export function eliminarReporte(id) {
-  return deleteDoc(doc(db, COLECCION, id))
+  return escribir(() => deleteDoc(doc(db, COLECCION, id)))
 }
