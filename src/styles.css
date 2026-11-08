@@ -12,7 +12,7 @@
   --line: #ddd6f3;
   --bg: #f1eefa;
   --card: #ffffff;
-  --rojo: #d6334a;
+  --rojo: #c9243b;
   --radio: 22px;
   --sombra: none;
   --sidebar: 260px;
@@ -469,3 +469,9 @@ input, textarea, select { border-radius: 14px; border-color: var(--line); }
 
 /* v3.2: emergencias 100% en rojo (sin combinar con el azul oscuro, que no cumplía el contraste) */
 .tipo-emergencia, .emg-icono { --ic-a: #8f0f25; --ic-b: #ef5a70; background: #ffe3e7; }
+
+/* v3.3: contraste revisado (iconos de emergencia >= 3:1 entre tonos y con el fondo; texto blanco sobre rojo >= 4,5:1) */
+.tipo-emergencia, .emg-icono { --ic-a: #5a0613; --ic-b: #e0364f; background: #fff1f3; }
+.side-link.emergencia, .btn-emergencia { background: #c9243b; color: #fff; }
+.btn-emergencia { box-shadow: 0 6px 16px rgba(201, 36, 59, 0.3); }
+.btn-emergencia:hover:not(:disabled), .side-link.emergencia:hover { background: #a81c31; color: #fff; }
