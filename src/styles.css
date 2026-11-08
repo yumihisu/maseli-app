@@ -1,20 +1,20 @@
 :root {
-  --v900: #1d0f5c;
-  --v700: #4a22c4;
-  --v600: #5b2ee6;
-  --v200: #d9cffc;
-  --v100: #ebe5fe;
-  --v50: #f5f2ff;
+  --v900: #201062;
+  --v700: #5632c8;
+  --v600: #6d41e7;
+  --v200: #d8ccfb;
+  --v100: #ece6fe;
+  --v50: #f6f3ff;
   --azul: #1e88e5;
   --verde-agua: #22b5a3;
-  --ink: #1a1633;
-  --muted: #6b6785;
-  --line: #e6e2f3;
-  --bg: #f7f6fc;
+  --ink: #1c1450;
+  --muted: #675f8f;
+  --line: #ddd6f3;
+  --bg: #f1eefa;
   --card: #ffffff;
   --rojo: #d6334a;
-  --radio: 16px;
-  --sombra: 0 1px 2px rgba(26, 22, 51, 0.04), 0 6px 20px rgba(91, 46, 230, 0.06);
+  --radio: 22px;
+  --sombra: none;
   --sidebar: 260px;
 }
 
@@ -376,3 +376,96 @@ select:focus { outline: none; border-color: var(--v600); box-shadow: 0 0 0 4px v
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; }
 }
+
+/* =====================================================================
+   v3 · Identidad: tarjetas con contorno, menú lavanda, iconos ilustrados
+   ===================================================================== */
+body { background: var(--bg); }
+.eyebrow { letter-spacing: 0.14em; }
+h1 { letter-spacing: -0.025em; color: var(--v900); }
+
+/* Tarjetas "contorno": bordes definidos, sin sombras pesadas */
+.card, .stat, .reporte { border: 1.5px solid var(--line); box-shadow: none; }
+.reporte:hover { transform: translateY(-2px); border-color: var(--v600); }
+.btn { border-radius: 14px; }
+.btn-primary { box-shadow: 0 6px 16px rgba(109, 65, 231, 0.25); }
+input, textarea, select { border-radius: 14px; border-color: var(--line); }
+
+/* Menú lateral lavanda (en vez del degradé violeta) */
+.sidebar { background: #e4dcfc; color: var(--v900); border-right: 1.5px solid var(--line); }
+.side-link { color: rgba(32, 16, 98, 0.78); }
+.side-link:hover { background: rgba(255, 255, 255, 0.6); color: var(--v900); }
+.side-link.activo { background: #fff; color: var(--v900); box-shadow: 0 0 0 1.5px var(--line); }
+.side-link.destacado { background: var(--v600); color: #fff; }
+.side-link.destacado:hover { background: var(--v700); color: #fff; }
+.side-link.destacado.activo { box-shadow: 0 0 0 3px rgba(109, 65, 231, 0.3); }
+.side-user { background: rgba(255, 255, 255, 0.65); border: 1.5px solid var(--line); }
+.side-user:hover { background: #fff; }
+.side-user small { color: var(--muted); }
+.avatar { background: var(--v600); color: #fff; }
+.logo-text { color: var(--v900); }
+.logo-btn:hover { background: rgba(255, 255, 255, 0.6); }
+.colapsado .side-user { background: none; border-color: transparent; }
+
+/* Panel de resumen: la primera tarjeta en azul-violeta oscuro, como en la referencia */
+.stat strong { color: var(--v600); }
+.stat:first-child { background: var(--v900); border-color: var(--v900); }
+.stat:first-child strong { color: #fff; }
+.stat:first-child span { color: #cfc4f7; }
+.chip { border-radius: 999px; border-width: 1.5px; }
+.chip.activo { background: var(--v900); border-color: var(--v900); }
+
+/* Iconos ilustrados: línea oscura + relleno de color */
+.reporte-icono, .opcion-icono, .emg-icono { --ic-linea: var(--v900); border-radius: 16px; }
+.reporte-icono { width: 52px; height: 52px; }
+.reporte-icono.grande { width: 68px; height: 68px; border-radius: 20px; }
+.opcion-icono { width: 54px; height: 54px; }
+.emg-icono { width: 44px; height: 44px; --ic-linea: #5a0f1c; }
+.tipo-avisos { background: #e1ecfd; color: #3d78d8; }
+.tipo-limpieza { background: #d9f4ee; color: #14a08c; }
+.tipo-mantenimiento { background: var(--v100); color: var(--v600); }
+.tipo-emergencia { background: #ffe3e7; color: #e5334b; }
+
+.opcion { border-width: 1.5px; border-radius: 20px; }
+.opcion:hover { border-color: var(--v600); background: #fff; }
+.opcion.sel { border-color: var(--v600); background: var(--v50); box-shadow: 0 0 0 3px var(--v100); }
+.crumbs li.activo .crumb { background: var(--v900); color: #fff; }
+.crumb-num.activo { background: var(--v600); }
+.crumbs li.activo .crumb .crumb-num { background: #fff; color: var(--v900); }
+.resumen { border: 1.5px dashed var(--v200); background: var(--v50); }
+.modal, .sheet { border-radius: 24px; }
+.vacio { border-width: 1.5px; border-radius: 24px; }
+
+/* Ingreso: portada con ilustración */
+.ingreso-hero { background: radial-gradient(circle at 15% 0%, #7f55f0, transparent 55%), linear-gradient(165deg, var(--v600), var(--v900)); }
+.hero-ilustracion { width: 100%; max-width: 340px; height: auto; margin: 4px 0 0; }
+.hero-lista svg { border-radius: 12px; }
+
+/* Fondo y barras móviles */
+.topbar, .bottom-nav { border-color: var(--line); }
+@media (max-width: 860px) {
+  .hero-ilustracion { max-width: 240px; }
+  .ingreso-hero .hero-lista { display: none; }
+}
+
+/* Corrección v3: titular blanco en la portada e iconos ilustrados más grandes */
+.ingreso-hero h1 { color: #fff; }
+.hero-ilustracion { margin-top: 18px; }
+.reporte-icono svg, .opcion-icono svg, .emg-icono svg { width: 72%; height: 72%; }
+.reporte-icono.grande svg { width: 74%; height: 74%; }
+
+/* v3.1: iconos sólidos en dos tonos (azul oscuro + detalle), más grandes y sin tinte de color por tipo */
+.reporte-icono, .opcion-icono, .emg-icono {
+  --ic-a: #201062; --ic-b: #8b63f2;
+  background: #f1ecff; color: inherit;
+}
+.reporte-icono svg, .opcion-icono svg, .emg-icono svg { width: 84%; height: 84%; }
+.reporte-icono.grande svg { width: 82%; height: 82%; }
+.tipo-avisos, .tipo-limpieza, .tipo-mantenimiento { background: #f1ecff; color: inherit; }
+.tipo-emergencia, .emg-icono { --ic-b: #ef4b63; background: #ffe8eb; color: inherit; }
+.reporte-icono { width: 56px; height: 56px; }
+.opcion-icono { width: 60px; height: 60px; }
+.emg-icono { width: 48px; height: 48px; }
+
+/* v3.2: emergencias 100% en rojo (sin combinar con el azul oscuro, que no cumplía el contraste) */
+.tipo-emergencia, .emg-icono { --ic-a: #8f0f25; --ic-b: #ef5a70; background: #ffe3e7; }

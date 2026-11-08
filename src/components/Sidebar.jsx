@@ -26,7 +26,7 @@ export default function Sidebar({ colapsado, onToggle }) {
           aria-label={colapsado ? 'Desplegar menú' : 'Plegar menú'}
           title={colapsado ? 'Desplegar menú' : 'Plegar menú'}
         >
-          <Logo claro soloIcono={colapsado} />
+          <Logo soloIcono={colapsado} />
         </button>
 
         <nav className="side-nav" aria-label="Navegación principal">

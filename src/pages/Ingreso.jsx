@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { ArrowRight, BellRing, Eye, Loader2, ShieldCheck } from 'lucide-react'
+import IlustracionEdificio from '../components/IlustracionEdificio.jsx'
 import Logo from '../components/Logo.jsx'
 import SetupNotice from '../components/SetupNotice.jsx'
 import { useApp } from '../context/AppContext.jsx'
@@ -52,6 +53,7 @@ export default function Ingreso() {
             <br />
             Saber qué pasa después.
           </h1>
+          <IlustracionEdificio />
           <ul className="hero-lista">
             <li>
               <BellRing size={20} /> Avisá en pocos pasos

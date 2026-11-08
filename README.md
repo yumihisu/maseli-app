@@ -38,6 +38,14 @@ tiempo real.
 > Importante: la versión 2 cambia `firestore.rules` (permite el tipo `emergencia` y los campos `piso` y
 > `depto` en el perfil). Hay que volver a pegar el archivo en Firebase → Firestore → Reglas y **Publicar**.
 
+## Novedades de la versión 3 (identidad visual)
+
+- **Iconos propios** (`src/components/Iconos.jsx`): línea oscura + relleno de color + una chispa, en la línea de las
+  ilustraciones del case study. Reemplazan a los iconos genéricos en tipos de servicio, especialidades y emergencias.
+- **Paleta** basada en `#6D41E7` (violeta) y `#201062` (azul-violeta oscuro), con fondo lavanda.
+- **Tarjetas con contorno** y bordes redondeados; menú lateral lavanda; panel de resumen con tarjeta oscura.
+- **Portada de ingreso** con ilustración de edificio y estado "En seguimiento".
+
 ## Datos que se guardan en Firestore
 
 - `residentes/{uid}`: nombre, residencia y, de forma opcional, piso y depto del usuario.

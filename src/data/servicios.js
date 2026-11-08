@@ -1,25 +1,10 @@
 // Catálogo basado en la arquitectura de información:
 //   1. Tipo de servicio  ->  2. Especialidad  ->  3. Ubicación y descripción  ->  4. Agendado
 import {
-  Brush,
-  Bug,
-  Building,
-  Building2,
-  DoorOpen,
-  Droplets,
-  Flame,
-  Hammer,
-  HeartPulse,
-  Megaphone,
-  Plug,
-  ShieldAlert,
-  Siren,
-  Sparkles,
-  TriangleAlert,
-  Wind,
-  Wrench,
-  Zap,
-} from 'lucide-react'
+  IcAdministracion, IcAgua, IcAreasComunes, IcAvisos, IcElectrico, IcElectrodomesticos, IcEmergencia,
+  IcGas, IcGasFuga, IcGeneral, IcIncendio, IcInfraestructura, IcInundacion, IcLimpieza, IcMantenimiento,
+  IcOtraEmergencia, IcPersona, IcPlagas, IcPortero, IcProfunda, IcRiesgoElectrico, IcSeguridad,
+} from '../components/Iconos.jsx'
 
 // Edificios disponibles en el ingreso (menú desplegable)
 export const EDIFICIOS = ['Edificio 1', 'Edificio 2', 'Edificio 3']
@@ -29,35 +14,35 @@ export const SERVICIOS = [
     id: 'avisos',
     nombre: 'Avisos / Otros',
     ayuda: 'Comunicá algo a la administración o al portero',
-    icono: Megaphone,
+    icono: IcAvisos,
     especialidades: [
-      { id: 'administracion', nombre: 'Administración', icono: Building2 },
-      { id: 'portero', nombre: 'Portero', icono: DoorOpen },
+      { id: 'administracion', nombre: 'Administración', icono: IcAdministracion },
+      { id: 'portero', nombre: 'Portero', icono: IcPortero },
     ],
   },
   {
     id: 'limpieza',
     nombre: 'Limpieza',
     ayuda: 'Limpieza de tu unidad o de espacios comunes',
-    icono: Sparkles,
+    icono: IcLimpieza,
     especialidades: [
-      { id: 'profunda', nombre: 'Profunda', icono: Sparkles },
-      { id: 'general', nombre: 'General', icono: Brush },
-      { id: 'areas_comunes', nombre: 'Áreas comunes', icono: Building },
-      { id: 'plagas', nombre: 'Control de plagas', icono: Bug },
+      { id: 'profunda', nombre: 'Profunda', icono: IcProfunda },
+      { id: 'general', nombre: 'General', icono: IcGeneral },
+      { id: 'areas_comunes', nombre: 'Áreas comunes', icono: IcAreasComunes },
+      { id: 'plagas', nombre: 'Control de plagas', icono: IcPlagas },
     ],
   },
   {
     id: 'mantenimiento',
     nombre: 'Mantenimiento',
     ayuda: 'Arreglos, roturas y fallas técnicas',
-    icono: Wrench,
+    icono: IcMantenimiento,
     especialidades: [
-      { id: 'electrico', nombre: 'Eléctrico', icono: Zap },
-      { id: 'agua', nombre: 'Agua', icono: Droplets },
-      { id: 'gas', nombre: 'Gas', icono: Flame },
-      { id: 'infraestructura', nombre: 'Infraestructura', icono: Hammer },
-      { id: 'electrodomesticos', nombre: 'Electrodomésticos', icono: Plug },
+      { id: 'electrico', nombre: 'Eléctrico', icono: IcElectrico },
+      { id: 'agua', nombre: 'Agua', icono: IcAgua },
+      { id: 'gas', nombre: 'Gas', icono: IcGas },
+      { id: 'infraestructura', nombre: 'Infraestructura', icono: IcInfraestructura },
+      { id: 'electrodomesticos', nombre: 'Electrodomésticos', icono: IcElectrodomesticos },
     ],
   },
 ]
@@ -66,15 +51,15 @@ export const SERVICIOS = [
 export const SERVICIO_EMERGENCIA = {
   id: 'emergencia',
   nombre: 'Emergencia',
-  icono: Siren,
+  icono: IcEmergencia,
   especialidades: [
-    { id: 'incendio', nombre: 'Incendio o humo', icono: Flame },
-    { id: 'gas', nombre: 'Olor o pérdida de gas', icono: Wind },
-    { id: 'agua', nombre: 'Inundación o pérdida de agua', icono: Droplets },
-    { id: 'electrico', nombre: 'Riesgo eléctrico', icono: Zap },
-    { id: 'persona', nombre: 'Persona herida o en riesgo', icono: HeartPulse },
-    { id: 'seguridad', nombre: 'Intruso o seguridad', icono: ShieldAlert },
-    { id: 'otra', nombre: 'Otra emergencia', icono: TriangleAlert },
+    { id: 'incendio', nombre: 'Incendio o humo', icono: IcIncendio },
+    { id: 'gas', nombre: 'Olor o pérdida de gas', icono: IcGasFuga },
+    { id: 'agua', nombre: 'Inundación o pérdida de agua', icono: IcInundacion },
+    { id: 'electrico', nombre: 'Riesgo eléctrico', icono: IcRiesgoElectrico },
+    { id: 'persona', nombre: 'Persona herida o en riesgo', icono: IcPersona },
+    { id: 'seguridad', nombre: 'Intruso o seguridad', icono: IcSeguridad },
+    { id: 'otra', nombre: 'Otra emergencia', icono: IcOtraEmergencia },
   ],
 }
 
